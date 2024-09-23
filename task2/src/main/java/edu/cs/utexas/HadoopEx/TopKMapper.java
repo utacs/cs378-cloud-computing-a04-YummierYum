@@ -1,6 +1,7 @@
 package edu.cs.utexas.HadoopEx;
 
 import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.FloatWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 
@@ -11,7 +12,7 @@ import java.util.PriorityQueue;
 import org.apache.log4j.Logger;
 
 
-public class TopKMapper extends Mapper<Text, Text, Text, IntWritable> {
+public class TopKMapper extends Mapper<Text, Text, Text, FloatWritable> {
 
 	private Logger logger = Logger.getLogger(TopKMapper.class);
 
@@ -33,11 +34,12 @@ public class TopKMapper extends Mapper<Text, Text, Text, IntWritable> {
 			throws IOException, InterruptedException {
 
 
-		int count = Integer.parseInt(value.toString());
+		float errorRatio = Float.parseFloat(value.toString());
+        logger.info("HAWKTAUH TopKMapper: key is " + key.toString() + " value is " + errorRatio);
 
-		pq.add(new WordAndCount(new Text(key), new IntWritable(count)) );
+		pq.add(new WordAndCount(new Text(key), new FloatWritable(errorRatio)));
 
-		if (pq.size() > 10) {
+		if (pq.size() > 5) {
 			pq.poll();
 		}
 	}
