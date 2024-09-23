@@ -45,7 +45,7 @@ public class WordCount extends Configured implements Tool {
 			job.setReducerClass(WordCountReducer.class);
 
 			// specify output types
-			job.setOutputKeyClass(Text.class);
+			job.setOutputKeyClass(IntWritable.class);
 			job.setOutputValueClass(IntWritable.class);
 
 			// specify input and output directories
