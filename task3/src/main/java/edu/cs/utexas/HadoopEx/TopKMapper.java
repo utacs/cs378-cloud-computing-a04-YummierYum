@@ -34,12 +34,12 @@ public class TopKMapper extends Mapper<Text, Text, Text, FloatWritable> {
 			throws IOException, InterruptedException {
 
 
-		float errorRatio = Float.parseFloat(value.toString());
-        logger.info("HAWKTAUH TopKMapper: key is " + key.toString() + " value is " + errorRatio);
+		float earningsRatio = Float.parseFloat(value.toString());
+        logger.info("HAWKTUAH TopKMapper: key is " + key.toString() + " value is " + earningsRatio);
 
-		pq.add(new WordAndCount(new Text(key), new FloatWritable(errorRatio)));
+		pq.add(new WordAndCount(new Text(key), new FloatWritable(earningsRatio)));
 
-		if (pq.size() > 5) {
+		if (pq.size() > 10) {
 			pq.poll();
 		}
 	}

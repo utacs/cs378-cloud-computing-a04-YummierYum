@@ -17,7 +17,7 @@ import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 import org.apache.hadoop.util.Tool;
 import org.apache.hadoop.util.ToolRunner;
 
-public class TaxiErrorTopKDriver extends Configured implements Tool {
+public class DriverEarningsTopKDriver extends Configured implements Tool {
 
 	/**
 	 * 
@@ -26,7 +26,7 @@ public class TaxiErrorTopKDriver extends Configured implements Tool {
 	 */
 
 	public static void main(String[] args) throws Exception {
-		int res = ToolRunner.run(new Configuration(), new TaxiErrorTopKDriver(), args);
+		int res = ToolRunner.run(new Configuration(), new DriverEarningsTopKDriver(), args);
 		System.exit(res);
 	}
 
@@ -38,17 +38,17 @@ public class TaxiErrorTopKDriver extends Configured implements Tool {
 			Configuration conf = new Configuration();
 
 			Job job = new Job(conf, "WordCount");
-			job.setJarByClass(TaxiErrorTopKDriver.class);
+			job.setJarByClass(DriverEarningsTopKDriver.class);
 
 			// specify a Mapper
-			job.setMapperClass(ErrorFractionMapper.class);
+			job.setMapperClass(EarningsMapper.class);
 
 			// specify a Reducer
-			job.setReducerClass(ErrorFractionReducer.class);
+			job.setReducerClass(EarningsReducer.class);
 
 			// specify output types
 			job.setOutputKeyClass(Text.class);
-			job.setOutputValueClass(TaxiDriverError.class);
+			job.setOutputValueClass(TaxiDriverEarnings.class);
 
 			// specify input and output directories
 			FileInputFormat.addInputPath(job, new Path(args[0]));
@@ -62,7 +62,7 @@ public class TaxiErrorTopKDriver extends Configured implements Tool {
 			}
 
 			Job job2 = new Job(conf, "TopK");
-			job2.setJarByClass(TaxiErrorTopKDriver.class);
+			job2.setJarByClass(DriverEarningsTopKDriver.class);
 
 			// specify a Mapper
 			job2.setMapperClass(TopKMapper.class);
