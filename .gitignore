@@ -1,17 +1,13 @@
-target/
-pom.xml.tag
-pom.xml.releaseBackup
-pom.xml.versionsBackup
-pom.xml.next
-release.properties
-dependency-reduced-pom.xml
-buildNumber.properties
-.mvn/timing.properties
-# https://github.com/takari/maven-wrapper#usage-without-binary-jar
-.mvn/wrapper/maven-wrapper.jar
+task1/target/
+task2/target/
+task3/target/
+task*/pom.xml.*
 
-error_lines.txt
+# https://github.com/takari/maven-wrapper#usage-without-binary-jar
+
+task*/error_lines.txt
 
 taxi-data-sorted-small.csv
 
-output/
+task*/output/
+task*/intermediate/
