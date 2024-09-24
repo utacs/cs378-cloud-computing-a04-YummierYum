@@ -19,7 +19,10 @@ public class EarningsMapper extends Mapper<Object, Text, Text, TaxiDriverEarning
 
 		String [] lineSplit = value.toString().split(",");
         Text driverId = new Text(lineSplit[1]);
+        
+
         Writer output = new BufferedWriter(new FileWriter("error_lines.txt", true));
+
 
         int duration = 0;
         float fare = 0;
@@ -42,25 +45,25 @@ public class EarningsMapper extends Mapper<Object, Text, Text, TaxiDriverEarning
 
         } catch (NumberFormatException e) {
             bad = true;
+            output.append("BAD LINE (Can't parse values): " + value.toString() + "\n");
         }
 
         if(!bad) {
             if (Math.abs(fare + surcharge + mta_tax + tip_amount + tolls_amount - total_amount) > 0.001) {
                 bad = true;
+                output.append("BAD LINE (Total amount doesn't match): " + value.toString() + "\n");
             }
-        }
 
-        if (!bad) {
-            if (duration == 0) {
+            if(duration <= 0) {
                 bad = true;
+                output.append("BAD LINE (invalid duration): " + value.toString() + "\n");
             }
         }
 
-        if (bad) {
-            output.append(value.toString() + "\n");
-        } else {
+        if(!bad) {
             context.write(driverId, new TaxiDriverEarnings(duration, total_amount));
         }
+        
         
         output.close();
         return;

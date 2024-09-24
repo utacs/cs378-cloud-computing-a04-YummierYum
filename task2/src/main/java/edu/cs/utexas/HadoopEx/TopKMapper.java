@@ -35,7 +35,6 @@ public class TopKMapper extends Mapper<Text, Text, Text, FloatWritable> {
 
 
 		float errorRatio = Float.parseFloat(value.toString());
-        logger.info("HAWKTAUH TopKMapper: key is " + key.toString() + " value is " + errorRatio);
 
 		pq.add(new WordAndCount(new Text(key), new FloatWritable(errorRatio)));
 

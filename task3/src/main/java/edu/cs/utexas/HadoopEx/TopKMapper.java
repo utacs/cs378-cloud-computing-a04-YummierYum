@@ -35,7 +35,6 @@ public class TopKMapper extends Mapper<Text, Text, Text, FloatWritable> {
 
 
 		float earningsRatio = Float.parseFloat(value.toString());
-        logger.info("HAWKTUAH TopKMapper: key is " + key.toString() + " value is " + earningsRatio);
 
 		pq.add(new WordAndCount(new Text(key), new FloatWritable(earningsRatio)));
 

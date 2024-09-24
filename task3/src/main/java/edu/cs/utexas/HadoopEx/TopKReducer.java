@@ -86,10 +86,10 @@ public class TopKReducer extends  Reducer<Text, FloatWritable, Text, FloatWritab
 
 
         for (WordAndCount value : values) {
-            context.write(value.getWord(), value.getCount());
-            logger.info("TopKReducer - Top-10 Highest Earnings Rate Drivers are:  " + value.getWord() + "  Count:"+ value.getCount());
+            FloatWritable earningsRounded = new FloatWritable(Float.parseFloat(String.format("%.2f", value.getCount().get())));
+            context.write(value.getWord(), earningsRounded);
+            logger.info("TopKReducer - Top-10 Highest Earnings Rate Drivers are:  " + value.getWord() + "  Count:"+ earningsRounded);
         }
-
 
     }
 

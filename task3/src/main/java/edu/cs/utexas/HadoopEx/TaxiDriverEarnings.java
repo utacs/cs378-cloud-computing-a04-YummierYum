@@ -22,7 +22,7 @@ public class TaxiDriverEarnings implements Writable {
     }
 
     public float getEarningsRatio() {
-        return this.earnings.get() / (float) this.numSeconds.get() / 60;
+        return this.earnings.get() / ((float) this.numSeconds.get() / 60);
     }
 
     public void write(DataOutput out) throws IOException {
