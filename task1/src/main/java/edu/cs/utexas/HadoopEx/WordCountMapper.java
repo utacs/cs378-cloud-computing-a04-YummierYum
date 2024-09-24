@@ -27,17 +27,19 @@ public class WordCountMapper extends Mapper<Object, Text, IntWritable, IntWritab
         if (Float.parseFloat(line[6]) == 0 || Float.parseFloat(line[7]) == 0) {
             output.append(value.toString() + "\n");
             int pickupTime = Integer.parseInt(line[2].split(" ")[1].split(":")[0]);
-            context.write(new IntWritable(pickupTime + 1), new IntWritable(1));
-            output.close();
-            return;
+            if (pickupTime == 0) {
+                pickupTime = 24;
+            }
+            context.write(new IntWritable(pickupTime), new IntWritable(1));
         }
         //check dropoff locations for zeroes
         if (Float.parseFloat(line[8]) == 0 || Float.parseFloat(line[9]) == 0) {
             output.append(value.toString() + "/n");
             int dropoffTime = Integer.parseInt(line[3].split(" ")[1].split(":")[0]);
-            context.write(new IntWritable(dropoffTime + 1), new IntWritable(1));
-            output.close();
-            return;
+            if (dropoffTime == 0) {
+                dropoffTime = 24;
+            }
+            context.write(new IntWritable(dropoffTime), new IntWritable(1));
         } 
         output.close();
         return;
